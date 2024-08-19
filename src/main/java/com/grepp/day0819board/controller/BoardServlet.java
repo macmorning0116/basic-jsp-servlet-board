@@ -59,11 +59,38 @@ public class BoardServlet extends HttpServlet {
                 }
             }else{
                 req.setAttribute("msg", "로그인후 볼 수 있습니다.");
-                req.setAttribute("path", req.getContextPath());
+                req.setAttribute("path", req.getContextPath()+"/board.do?action=list");
                 req.getRequestDispatcher("WEB-INF/views/alert.jsp").forward(req, resp);
             }
-            // 게시글 수정
-        } else if ("update".equals(action)) {
+
+        } // 게시글 삭제
+        else if ("delete".equals(action)) {
+            int checkWriter = 0;
+            try {
+                checkWriter = boardService.writerCheck(req);
+                if (checkWriter == 1) {
+                    int result = boardService.deleteBoard(req);
+                    if (result == 1) {
+                        req.setAttribute("msg", "성공적으로 게시글을 삭제했습니다.");
+                        req.setAttribute("path", req.getContextPath() + "/board.do?action=list");
+                        req.getRequestDispatcher("/WEB-INF/views/alert.jsp").forward(req, resp);
+                    }else{
+                        req.setAttribute("msg", "게시글을 삭제하는데 오류가 발생했습니다. 관리자에게 문의 바랍니다.");
+                        req.setAttribute("path", req.getContextPath() + "/board.do?action=list");
+                        req.getRequestDispatcher("/WEB-INF/views/alert.jsp").forward(req, resp);
+                    }
+                }else{
+                    req.setAttribute("msg", "작성자만 삭제 가능합니다");
+                    req.setAttribute("path", req.getContextPath()+"/board.do?action=list");
+                    req.getRequestDispatcher("/WEB-INF/views/alert.jsp").forward(req, resp);
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        // 게시글 수정
+        else if ("update".equals(action)) {
             try {
                 int result = boardService.writerCheck(req);
                 if (result == 1) {
@@ -100,8 +127,9 @@ public class BoardServlet extends HttpServlet {
                     req.getRequestDispatcher("/WEB-INF/views/alert.jsp").forward(req, resp);
                 }
             }
+
             // 게시글 작성
-            else{
+            else {
                 int result = boardService.write(req);
                 if (result == 1) {
                     req.setAttribute("msg", "글 작성이 완료되었습니다 :)");

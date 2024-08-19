@@ -76,8 +76,20 @@ public class BoardRepositoryMysql implements BoardRepository{
     }
 
     @Override
-    public int delete(BoardDTO board) throws SQLException {
-        return 0;
+    public int delete(int bno) throws SQLException {
+        int result = 0;
+        try {
+            String sql = "delete from board where no = '" + bno + "';";
+            conn = DBUtil.getConnection();
+            ps = conn.prepareStatement(sql);
+            result = ps.executeUpdate();
+            return result;
+        } catch (Exception e) {
+            System.out.println("BoardRepositoryMysql.delete error");
+        }finally {
+            DBUtil.close(ps, conn);
+        }
+        return result;
     }
 
     @Override

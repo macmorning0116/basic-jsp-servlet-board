@@ -90,5 +90,10 @@ public class BoardService {
 
     }
 
-
+    // 게시글 삭제
+    public int deleteBoard(HttpServletRequest request) throws SQLException {
+        int bno = Integer.parseInt(request.getParameter("no"));
+        int result = boardRepository.delete(bno);
+        return result;
+    }
 }

@@ -6,7 +6,7 @@ import java.util.List;
 public interface BoardRepository {
     int insert(BoardDTO board) throws SQLException;
     int update(BoardDTO board) throws SQLException;
-    int delete(BoardDTO board) throws SQLException;
+    int delete(int bno) throws SQLException;
     List<BoardDTO> selectAll() throws SQLException;
     BoardDTO selectOne(int id) throws SQLException;
     MemberDTO findMember(String id) throws SQLException;

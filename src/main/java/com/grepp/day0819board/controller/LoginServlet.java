@@ -67,7 +67,7 @@ public class LoginServlet extends HttpServlet {
             } else if (result == 2) {
                 System.out.println("비밀번호 틀림 응답");
                 req.setAttribute("msg", "비밀번호가 틀렸습니다 다시 시도해주세요");
-                req.setAttribute("path", req.getContextPath()+"/login.do");
+                req.setAttribute("path", req.getContextPath()+"/login.do?action=login");
                 req.getRequestDispatcher("/WEB-INF/views/alert.jsp").forward(req, resp);
             } else if (result == 0) {
                 System.out.println("존재하지 않는 아이디 응답");

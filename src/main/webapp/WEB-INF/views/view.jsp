@@ -41,6 +41,7 @@
   </tr>
 </table>
 <a href="<%=request.getContextPath()%>/board.do?action=update&no=<%=bbb.getNo()%>">[수정하기]</a>
+<a href="<%=request.getContextPath()%>/board.do?action=delete&no=<%=bbb.getNo()%>">[삭제하기]</a>
 <a href="<%=request.getContextPath()%>/board.do?action=list">[게시판 목록으로]</a>
 </body>
 </html>
